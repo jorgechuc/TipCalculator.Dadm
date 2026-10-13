@@ -6,6 +6,7 @@
         private decimal _porcentajeDePropina;
         private int _numeroDePersonas;
 
+        public decimal ImporteDelConsumo => _importeDelConsumo;
         public decimal ImportePropina
             => _importeDelConsumo * _porcentajeDePropina / 100.0m;
         public decimal ImporteDelConsumoConPropina

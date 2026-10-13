@@ -125,11 +125,16 @@ namespace TipCalculator.Maui.ViewModels
         }
 
         public ICommand CalcularCommand { get; private set; }
+        public ICommand LimpiarCommand { get; private set; }
+        public ICommand PorcentajeDePropinaCommand { get; private set; }
 
         public MainViewModel()
         {
             _consumo = new ConsumoCompartido(0.0m, 10.0m);
             CalcularCommand = new Command(CalcularPropina);
+            LimpiarCommand = new Command(LimpiarDatos);
+            PorcentajeDePropinaCommand = 
+                new Command<string>(ActualizarPorcentajeDePropina);
         }
 
         private void CalcularPropina()
@@ -152,8 +157,35 @@ namespace TipCalculator.Maui.ViewModels
             {
                 _consumo = new ConsumoCompartido(
                     importeDelConsumo, porcentajeDePropina, numeroDePersonas);
-
+                ImporteConsumoPorPersona = _consumo
+                    .ImporteDelConsumoPorPersona.ToString("F2");
+                //ImporteDelConsumo = _consumo.ImporteDelConsumo.ToString("F2");
+                ImportePropina = _consumo.ImportePropina.ToString("F2");
+                ImportePropinaPorPersona = _consumo
+                    .ImportePropinaPorPersona.ToString("F2");
+                ImporteConsumoConPropina = _consumo
+                    .ImporteDelConsumoConPropina.ToString("F2");
+                ImporteConsumoConPropinaPorPersona = _consumo
+                    .ImporteDelConsumoConPropinaPorPersona.ToString("F2");
             }
+        }
+
+        private void LimpiarDatos()
+        {
+            ImporteDelConsumo = string.Empty;
+            NumeroDePersonas = "1";
+            PorcentajeDePropina = "10";
+
+            ImporteConsumoPorPersona = string.Empty;
+            ImportePropina = string.Empty;
+            ImportePropinaPorPersona = string.Empty;
+            ImporteConsumoConPropina = string.Empty;
+            ImporteConsumoConPropinaPorPersona = string.Empty;
+        }
+
+        private void ActualizarPorcentajeDePropina(string nuevoPorcentaje)
+        {
+            PorcentajeDePropina = nuevoPorcentaje;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
